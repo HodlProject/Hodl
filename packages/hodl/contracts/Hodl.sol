@@ -24,4 +24,8 @@ contract Hodl {
     // TODO: Transfer back to sender
     hodlers[msg.sender] -= _amount;
   }
+
+  function getBalance() view public returns(uint balance) {
+    return hodlers[msg.sender];
+  }
 }
