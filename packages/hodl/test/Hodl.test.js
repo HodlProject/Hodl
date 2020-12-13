@@ -21,4 +21,22 @@ contract('Hodl', (accounts) => {
     assert.equal(actualBalance, amountDeposited);
   });
 
+  it('should withdraw amount and update the balance of the sender', async () => {
+    const startingBalance = 15;
+    const amountToWithdraw = 5;
+    const expectedBalance = 10;
+
+    await instance.deposit(startingBalance);
+    await instance.withdraw(amountToWithdraw);
+    const actualBalance = await instance.getBalance();
+
+    assert.equal(actualBalance, expectedBalance);
+  });
+
+  it('should not allow senders to deposit a negative amount', async () => {
+    const amountToDeposit = -1; 
+
+    await instance.deposit(amountToDeposit);
+  });
+
 });
