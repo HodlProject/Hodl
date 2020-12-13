@@ -5,7 +5,7 @@ contract Hodl {
   
   mapping(address => uint) public hodlers;
 
-  constructor() {
+  constructor() public {
     owner = msg.sender;
   }
 
