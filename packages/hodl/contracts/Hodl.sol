@@ -13,19 +13,17 @@ contract Hodl {
     daiToken = _daiToken;
   }
 
-  function deposit(uint _amount) public {
-    require(_amount > 0, "Amount deposited must be greater than 0.");
-
-    daiToken.transferFrom(msg.sender, address(this), _amount);
+  function deposit(uint _amount) public payable {
+    // daiToken.transferFrom(msg.sender, address(this), _amount);
     hodlerBalances[msg.sender] += _amount;
   }
 
-  function withdraw(uint _amount) public {
+  function withdraw(uint _amount) public payable {
     uint balance = hodlerBalances[msg.sender];
 
     require(_amount <= balance, "Amount withdrawed must be less than or equal to your current balance.");
 
-    daiToken.transfer(msg.sender, _amount);
+    // daiToken.transfer(msg.sender, _amount);
     hodlerBalances[msg.sender] -= _amount;
   }
 
