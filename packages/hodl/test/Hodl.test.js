@@ -1,11 +1,13 @@
 const Hodl = artifacts.require('Hodl');
+const DaiToken = artifacts.require('DaiToken');
 
 contract('Hodl', (accounts) => {
-  let instance;
+  let instance, daiToken;
   const owner = accounts[0];
 
   beforeEach(async () => {
-    instance = await Hodl.new({ from: owner });
+    daiToken = await DaiToken.new();
+    instance = await Hodl.new(daiToken.address, { from: owner });
   });
 
   it('should deploy', async () => {
