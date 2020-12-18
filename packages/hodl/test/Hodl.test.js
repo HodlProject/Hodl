@@ -7,6 +7,7 @@ function tokens(n) {
 
 contract('Hodl', ([owner, investor]) => {
   let instance, daiToken;
+  const secondsTilWithdraw = 20;
 
   beforeEach(async () => {
     daiToken = await DaiToken.new();
@@ -22,7 +23,7 @@ contract('Hodl', ([owner, investor]) => {
   it('should deposit amount and assign the amount to the sender', async () => {
     const amountDeposited = 15;
 
-    await instance.deposit(amountDeposited, { from: investor });
+    await instance.deposit(amountDeposited, secondsTilWithdraw, { from: investor });
     const actualBalance = await instance.getBalance({ from: investor });
 
     assert.equal(actualBalance, amountDeposited);
@@ -30,11 +31,10 @@ contract('Hodl', ([owner, investor]) => {
 
   it('should withdraw amount and update the balance of the sender', async () => {
     const startingBalance = 15;
-    const amountToWithdraw = 5;
-    const expectedBalance = 10;
+    const expectedBalance = 0;
 
-    await instance.deposit(startingBalance, { from: investor });
-    await instance.withdraw(amountToWithdraw, { from: investor });
+    await instance.deposit(startingBalance, secondsTilWithdraw, { from: investor });
+    await instance.withdraw({ from: investor });
     const actualBalance = await instance.getBalance({ from: investor });
 
     assert.equal(actualBalance, expectedBalance);
